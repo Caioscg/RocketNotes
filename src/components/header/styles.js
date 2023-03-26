@@ -42,3 +42,19 @@ export const Profile = styled.div`
         }
     }
 `
+
+export const Logout = styled.button`
+    border: none;
+    background: none;
+
+    > svg {
+        color: ${({ theme }) => theme.COLORS.GRAY_100};
+        width: 40px;
+        font-size: 36px;
+        transition: all .4s
+    }
+
+    > svg:hover {
+        font-size: 40px;
+    }
+`
