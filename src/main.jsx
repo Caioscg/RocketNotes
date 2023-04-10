@@ -7,7 +7,7 @@ import { SignIn } from './pages/SignIn'
 import { SignUp } from './pages/SignUp'
 import { Profile } from './pages/Profile'
 import { New } from './pages/New'
-import { ThemeProvider } from 'styled-components'
+import { ThemeProvider } from 'styled-components' 
 
 import GlobalStyles from './styles/global'
 
