@@ -15,9 +15,9 @@ export function Profile() {
 
             <Form>
 
-                <Avatar>
+                <Avatar> 
                     <img 
-                        src="https://github.com/Caioscg.png" 
+                        src="https://github.com/Caioscg.png" /* picture from github */
                         alt="Foto do usuário" 
                     />
 
