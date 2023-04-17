@@ -23,8 +23,8 @@ export function SignIn() {
                 />
 
                 <Input
-                    placeholder="E-mail"
-                    type="text"
+                    placeholder="Password"
+                    type="password"
                     icon={FiLock}
                 />
 
