@@ -23,7 +23,7 @@ export function SignIn() {
                 />
 
                 <Input
-                    placeholder="Password"
+                    placeholder="Senha"
                     type="password"
                     icon={FiLock}
                 />
