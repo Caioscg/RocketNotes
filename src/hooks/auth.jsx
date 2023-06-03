@@ -1,14 +1,20 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, useState } from "react"
 
 import { api } from '../services/api'
 
-const AuthContext = createContext({})
+export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
-    async function singIn({ email, password }) {
+    const [data, setData] = useState({})
+
+    async function signIn({ email, password }) {
         try {
             const response = await api.post("/sessions", { email, password })
-            console.log(response)
+            const { user, token } = response.data
+            
+            api.defaults.headers.authorization = `Bearer ${token}`  // aplica o token para todas no cabeçalho de todas requisições desse user
+            setData({ user, token }) // armazena no estado
+
         } catch(error) {  // tratamento de excessões
             if(error.response) {
                 alert(error.response.data.message)
@@ -20,7 +26,7 @@ function AuthProvider({ children }) {
     }
 
     return(
-        <AuthContext.Provider value={{ singIn }}>
+        <AuthContext.Provider value={{ signIn, user: data.user }}>
             {children}
         </AuthContext.Provider>
     )
