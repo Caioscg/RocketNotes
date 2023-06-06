@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 
 import { api } from '../services/api'
 
@@ -11,6 +11,9 @@ function AuthProvider({ children }) {
         try {
             const response = await api.post("/sessions", { email, password })
             const { user, token } = response.data
+
+            localStorage.setItem("@rocketnotes:user", JSON.stringify(user))
+            localStorage.setItem("@rocketnotes:token", token)
             
             api.defaults.headers.authorization = `Bearer ${token}`  // aplica o token para todas no cabeçalho de todas requisições desse user
             setData({ user, token }) // armazena no estado
@@ -24,6 +27,23 @@ function AuthProvider({ children }) {
             }
         }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("@rocketnotes:token")
+        const user = localStorage.getItem("@rocketnotes:user")
+
+        if (token && user) {
+            api.defaults.headers.authorization = `Bearer ${token}` // aplica o token para todas no cabeçalho de todas requisições desse user
+
+            setData({
+                token,
+                user: JSON.parse(user)
+            })
+        }
+
+    }, [])  // 1 parte do useEffect -> o que ele irá executar
+            // 2 parte -> o estado que quando mudar disparará o useEffect, neste caso vazio (rederizará 1 vez após a rederização do componente)
+            // se colocasse algo no [] o useEffect seria chamado sempre que esse estado mudasse + 1 vez após a renderização
 
     return(
         <AuthContext.Provider value={{ signIn, user: data.user }}>
