@@ -28,6 +28,13 @@ function AuthProvider({ children }) {
         }
     }
 
+    function signOut() {
+        localStorage.removeItem("@rocketnotes:token")
+        localStorage.removeItem("@rocketnotes:user")
+
+        setData({}) // objeto vazio, pra levar pro authRoutes
+    }
+
     useEffect(() => {
         const token = localStorage.getItem("@rocketnotes:token")
         const user = localStorage.getItem("@rocketnotes:user")
@@ -42,11 +49,15 @@ function AuthProvider({ children }) {
         }
 
     }, [])  // 1 parte do useEffect -> o que ele irá executar
-            // 2 parte -> o estado que quando mudar disparará o useEffect, neste caso vazio (rederizará 1 vez após a rederização do componente)
+            // 2 parte -> o estado que quando mudar disparará o useEffect, neste caso vazio (rederizará 1 vez após a rederização da pagina)
             // se colocasse algo no [] o useEffect seria chamado sempre que esse estado mudasse + 1 vez após a renderização
 
     return(
-        <AuthContext.Provider value={{ signIn, user: data.user }}>
+        <AuthContext.Provider value={{ 
+            signIn,
+            signOut,
+            user: data.user,
+            }}>
             {children}
         </AuthContext.Provider>
     )
