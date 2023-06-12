@@ -16,6 +16,9 @@ export function Profile() {
     const [passwordOld, setPasswordOld] = useState()
     const [passwordNew, setPasswordNew] = useState()
 
+    const [avatar, setAvatar] = useState(user.avatar)
+    const [avatarFile, setAvatarFile] = useState(null)
+
     async function handleUpdate() {
         const user = {
             name,
@@ -25,6 +28,11 @@ export function Profile() {
         }
 
         await updateProfile({ user })
+    }
+
+    function handleChangeAvatar(event) {  // onChange passa o event de forma automática
+        const file = event.target.files[0]   // 1a posição
+        setAvatarFile(file)
     }
 
     return(
@@ -39,7 +47,7 @@ export function Profile() {
 
                 <Avatar> 
                     <img 
-                        src="https://github.com/Caioscg.png" /* picture from github */
+                        src={avatar} /* picture from github */
                         alt="Foto do usuário" 
                     />
 
@@ -48,7 +56,8 @@ export function Profile() {
 
                         <input 
                             id="avatar"
-                            type="file" 
+                            type="file"
+                            onChange={handleChangeAvatar}
                         />
                     </label>
                 </Avatar>
