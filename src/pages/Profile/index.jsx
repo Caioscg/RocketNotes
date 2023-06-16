@@ -16,7 +16,7 @@ export function Profile() {
     const [passwordOld, setPasswordOld] = useState()
     const [passwordNew, setPasswordNew] = useState()
 
-    const [avatar, setAvatar] = useState(user.avatar)
+    const [avatar, setAvatar] = useState(user.avatar) // se ja tiver um avatar 
     const [avatarFile, setAvatarFile] = useState(null)
 
     async function handleUpdate() {
@@ -27,12 +27,15 @@ export function Profile() {
             old_password: passwordOld
         }
 
-        await updateProfile({ user })
+        await updateProfile({ user, avatarFile })
     }
 
     function handleChangeAvatar(event) {  // onChange passa o event de forma automática
         const file = event.target.files[0]   // 1a posição
         setAvatarFile(file)
+
+        const imagePreview = URL.createObjectURL(file)
+        setAvatar(imagePreview)
     }
 
     return(
