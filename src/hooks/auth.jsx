@@ -35,9 +35,17 @@ function AuthProvider({ children }) {
         setData({}) // objeto vazio, pra levar pro authRoutes
     }
 
-    async function updateProfile({ user }) {
+    async function updateProfile({ user, avatarFile }) {
         try {
             
+            if (avatarFile) {
+                const fileUploadForm = new FormData() // criando arquivo
+                fileUploadForm.append("avatar", avatarFile)  // adicionando no campo "avatar" a foto
+
+                const response = await api.patch("/users/avatar", fileUploadForm)
+                user.avatar = response.data.avatar  // salva o avatar no backend
+            }
+
             await api.put("/users", user)
             localStorage.setItem("@rocketnotes:user", JSON.stringify(user)) // substituindo pelos dados atualizados
 
