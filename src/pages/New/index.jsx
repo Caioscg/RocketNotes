@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
 import { Header } from "../../components/header";
@@ -10,6 +12,14 @@ import { Button } from "../../components/button";
 import { Container, Form } from "./styles";
 
 export function New() {
+    const [links, setLinks] = useState([]) // começa como um array pq é um array de links
+    const [newLink, setNewLink] = useState("") // começa como um texto pq é só um link
+
+    function handleAddLink() {
+        setLinks(previousState => [...previousState, newLink])  // adiciona o novo com o que ja tinha antes com o spread operator
+        setNewLink("")  // reseta o estado do new
+    }
+
     return(
         <Container>
             <Header />
@@ -26,8 +36,22 @@ export function New() {
                     <Textarea placeholder="Observações" />
 
                     <Section title="Links úteis">
-                        <NoteItem value="https://rocketseat.com.br" />
-                        <NoteItem isNew placeholder="Novo link"/>
+                        {
+                            links.map((link, index) => (
+                                <NoteItem
+                                    key={String(index)} 
+                                    value={link}
+                                    onClick={() => { }}
+                                />
+                            ))
+                        }
+                        <NoteItem 
+                            isNew 
+                            placeholder="Novo link"
+                            value={newLink}
+                            onChange={e => setNewLink(e.target.value)}
+                            onClick={handleAddLink}
+                        />
                     </Section>
 
                     <Section title="Marcadores">
@@ -37,7 +61,7 @@ export function New() {
                         </div>
                     </Section>
 
-                    <Button title="Salvar" />
+                    <Button title="Salvar"/>
 
                 </Form>
             </main>
