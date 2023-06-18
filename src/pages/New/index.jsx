@@ -20,6 +20,10 @@ export function New() {
         setNewLink("")  // reseta o estado do new
     }
 
+    function handleRemoveLink(deleted) {
+        setLinks(previousState => previousState.filter(link => link !== deleted))  // o filter retorna pro setLinks todos os links diferentes do que se quer remover
+    }
+
     return(
         <Container>
             <Header />
@@ -41,7 +45,7 @@ export function New() {
                                 <NoteItem
                                     key={String(index)} 
                                     value={link}
-                                    onClick={() => { }}
+                                    onClick={() => handleRemoveLink(link)} // usa esse formato de arrow pq tem parâmetro na função
                                 />
                             ))
                         }
