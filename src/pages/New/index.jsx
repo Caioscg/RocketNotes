@@ -15,6 +15,9 @@ export function New() {
     const [links, setLinks] = useState([]) // começa como um array pq é um array de links
     const [newLink, setNewLink] = useState("") // começa como um texto pq é só um link
 
+    const [tags, setTags] = useState([])
+    const [newTag, setNewTag] = useState("")
+
     function handleAddLink() {
         setLinks(previousState => [...previousState, newLink])  // adiciona o novo com o que ja tinha antes com o spread operator
         setNewLink("")  // reseta o estado do new
@@ -22,6 +25,11 @@ export function New() {
 
     function handleRemoveLink(deleted) {
         setLinks(previousState => previousState.filter(link => link !== deleted))  // o filter retorna pro setLinks todos os links diferentes do que se quer remover
+    }
+
+    function handleAddTags() {
+        setTags(previousState => [...previousState, newTag]) // com o spread operator ele não add o antigo array dentro do novo, só os elementos dele
+        setNewTag("")  // limpa o value do newTag
     }
 
     return(
@@ -40,7 +48,7 @@ export function New() {
                     <Textarea placeholder="Observações" />
 
                     <Section title="Links úteis">
-                        {
+                        {  // coloca chaves pq ta usando o conteudo de uma variavel(lista) e percorrendo ela com o map
                             links.map((link, index) => (
                                 <NoteItem
                                     key={String(index)} 
@@ -60,8 +68,23 @@ export function New() {
 
                     <Section title="Marcadores">
                         <div class="tags">
-                            <NoteItem value="react"/>
-                            <NoteItem isNew placeholder="Novo marcador"/>
+                            {
+                                tags.map((tag, index) => (
+                                    <NoteItem
+                                        key={String(index)}
+                                        value={tag}
+                                        onClick={() => { }}
+                                    />
+                                ))
+                            }
+
+                            <NoteItem 
+                                isNew 
+                                placeholder="Novo marcador"
+                                onChange={e => setNewTag(e.target.value)}
+                                value={newTag}
+                                onClick={handleAddTags}
+                            />
                         </div>
                     </Section>
 
