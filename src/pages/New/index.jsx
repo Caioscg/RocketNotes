@@ -32,6 +32,10 @@ export function New() {
         setNewTag("")  // limpa o value do newTag
     }
 
+    function handleRemoveTag(deleted) {
+        setTags(previousState => previousState.filter(tag => tag !== deleted))
+    }
+
     return(
         <Container>
             <Header />
@@ -73,7 +77,7 @@ export function New() {
                                     <NoteItem
                                         key={String(index)}
                                         value={tag}
-                                        onClick={() => { }}
+                                        onClick={() => handleRemoveTag(tag)}
                                     />
                                 ))
                             }
