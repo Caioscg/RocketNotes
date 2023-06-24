@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../../services/api";
+import { useAuth } from "../../hooks/auth";
 
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -24,6 +24,7 @@ export function New() {
     const [newTag, setNewTag] = useState("")
 
     const navigate = useNavigate()
+    const { sendNewNote } = useAuth()
 
     function handleAddLink() {
         setLinks(previousState => [...previousState, newLink])  // adiciona o novo com o que ja tinha antes com o spread operator
@@ -44,14 +45,7 @@ export function New() {
     }
 
     async function handleNewNote() {
-        await api.post("/notes", {
-            title,
-            description,
-            tags,
-            links
-        })
-
-        alert("Nota criada com sucesso!")
+        await sendNewNote(title, description, tags, links)
         navigate("/") // depois de criar a nota, ir para a home
     }
 
@@ -96,7 +90,7 @@ export function New() {
                     </Section>
 
                     <Section title="Marcadores">
-                        <div class="tags">
+                        <div className="tags">
                             {
                                 tags.map((tag, index) => (
                                     <NoteItem

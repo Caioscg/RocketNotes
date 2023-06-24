@@ -62,6 +62,24 @@ function AuthProvider({ children }) {
         }
     }
 
+    async function sendNewNote(title, description, tags, links){
+        try{            
+            await api.post("/notes", {
+                title,
+                description,
+                tags,
+                links
+            })
+            alert("Nota criada com sucesso")
+        } catch(error) {
+            if(error.response){
+                alert(error.response.data.message)
+            } else {
+                alert("Nota não cadastrada")
+            }
+        }
+    }
+
     useEffect(() => {
         const token = localStorage.getItem("@rocketnotes:token")
         const user = localStorage.getItem("@rocketnotes:user")
@@ -85,6 +103,7 @@ function AuthProvider({ children }) {
             signOut,
             updateProfile,
             user: data.user,
+            sendNewNote
             }}>
             {children}
         </AuthContext.Provider>
