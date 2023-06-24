@@ -45,6 +45,18 @@ export function New() {
     }
 
     async function handleNewNote() {
+        if (!title) {  // tratamento de exceções
+            return alert("Digite o título da nota!")
+        }
+
+        if (newLink) {
+            return alert("Você tem um link no campo de adicionar não salvo. Clique para adicionar ou deixe o campo vazio.")
+        }
+
+        if (newTag) {
+            return alert("Você tem uma tag no campo de adicionar não salva. Clique para adicionar ou deixe o campo vazio.")
+        }
+
         await sendNewNote(title, description, tags, links)
         navigate("/") // depois de criar a nota, ir para a home
     }
