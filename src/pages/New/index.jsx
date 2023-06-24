@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { api } from "../../services/api";
 
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Header } from "../../components/header";
@@ -12,11 +14,16 @@ import { Button } from "../../components/button";
 import { Container, Form } from "./styles";
 
 export function New() {
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+
     const [links, setLinks] = useState([]) // começa como um array pq é um array de links
     const [newLink, setNewLink] = useState("") // começa como um texto pq é só um link
 
     const [tags, setTags] = useState([])
     const [newTag, setNewTag] = useState("")
+
+    const navigate = useNavigate()
 
     function handleAddLink() {
         setLinks(previousState => [...previousState, newLink])  // adiciona o novo com o que ja tinha antes com o spread operator
@@ -36,6 +43,18 @@ export function New() {
         setTags(previousState => previousState.filter(tag => tag !== deleted))
     }
 
+    async function handleNewNote() {
+        await api.post("/notes", {
+            title,
+            description,
+            tags,
+            links
+        })
+
+        alert("Nota criada com sucesso!")
+        navigate("/") // depois de criar a nota, ir para a home
+    }
+
     return(
         <Container>
             <Header />
@@ -47,9 +66,15 @@ export function New() {
                         <Link to="/">voltar</Link>
                     </header>
 
-                    <Input placeholder="Título" />
+                    <Input 
+                        placeholder="Título" 
+                        onChange={e => setTitle(e.target.value)}
+                    />
 
-                    <Textarea placeholder="Observações" />
+                    <Textarea 
+                        placeholder="Observações" 
+                        onChange={e => setDescription(e.target.value)}
+                    />
 
                     <Section title="Links úteis">
                         {  // coloca chaves pq ta usando o conteudo de uma variavel(lista) e percorrendo ela com o map
@@ -92,7 +117,10 @@ export function New() {
                         </div>
                     </Section>
 
-                    <Button title="Salvar"/>
+                    <Button 
+                        title="Salvar"
+                        onClick={handleNewNote}
+                    />
 
                 </Form>
             </main>
