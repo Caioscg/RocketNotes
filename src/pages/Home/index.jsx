@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react'
 import { FiPlus, FiSearch } from 'react-icons/fi'
 import { Container, Brand, Menu, Search, Content, NewNote } from './styles'
 
+import { api } from '../../services/api'
+
 import { Header } from '../../components/header'
 import { Input } from '../../components/Input'
 import { ButtonText } from '../../components/ButtonText'
 import { Section } from '../../components/Section'
 import { Note } from '../../components/Note'
-import { api } from '../../services/api'
 
 export function Home() {
     const [tags, setTags] = useState([])
