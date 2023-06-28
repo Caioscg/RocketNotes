@@ -9,7 +9,7 @@ import avatarPlaceholder from '../../assets/avatar_placeholder.svg'
 export function Header() {
     const { signOut, user } = useAuth()
 
-    const avatarUrl = user.avatar? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
+    const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder
 
     return(
         <Container>
