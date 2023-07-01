@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { api } from '../../services/api'
 
@@ -13,12 +13,26 @@ import { ButtonText } from '../../components/ButtonText'
 export function Details() {
   const [data, setData] = useState(null)
 
-  const params = useParams()
+  const params = useParams()  // params.id é o id da nota selecionada
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate("/")
+  }
+
+  async function handleRemove() {
+    const confirm = window.confirm("Deseja realmente remover a nota?")
+
+    if (confirm) {
+      await api.delete(`/notes/${params.id}`)
+      handleBack()
+    }
+  }
 
   useEffect(() => {
     async function fetchNote() {
       const response = await api.get(`/notes/${params.id}`)
-      setData(response)
+      setData(response.data)
     }
 
     fetchNote()
@@ -33,7 +47,7 @@ export function Details() {
         <main>
           <Content>
 
-            <ButtonText title="Excluir nota" />
+            <ButtonText title="Excluir nota" onClick={handleRemove}/>
             
             <h1>
               {data.title}
@@ -49,7 +63,7 @@ export function Details() {
                   {
                     data.links.map(link => (
                       <li key={String(link.id)}>
-                        <a href={link.url}>
+                        <a href={link.url} target='_blank'>
                           {link.url}
                         </a>
                       </li>
@@ -58,13 +72,21 @@ export function Details() {
                 </Links>
               </Section>
             }
+            {
+              data.tags &&
+              <Section title="Marcadores">
+                {
+                  data.tags.map(tag => (
+                    <Tag
+                      key={String(tag.id)}
+                      title={tag.name}
+                    />
+                  ))
+                }
+              </Section>
+            }
 
-            <Section title="Marcadores">
-              <Tag title="express" />
-              <Tag title="nodejs" />
-            </Section>
-
-            <Button title="Voltar"/>
+            <Button title="Voltar" onClick={handleBack}/>
 
           </Content>
         </main>
