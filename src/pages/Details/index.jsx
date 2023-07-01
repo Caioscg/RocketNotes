@@ -17,7 +17,7 @@ export function Details() {
   const navigate = useNavigate()
 
   function handleBack() {
-    navigate("/")
+    navigate(-1)   // volta 1 no histórico
   }
 
   async function handleRemove() {

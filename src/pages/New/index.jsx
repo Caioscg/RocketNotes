@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/auth";
 
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import { Header } from "../../components/header";
 import { Input } from "../../components/Input";
@@ -10,6 +9,7 @@ import { Textarea } from "../../components/Textarea";
 import { NoteItem } from "../../components/NoteItem";
 import { Section } from "../../components/Section";
 import { Button } from "../../components/button";
+import { ButtonText } from "../../components/ButtonText";
 
 import { Container, Form } from "./styles";
 
@@ -58,7 +58,11 @@ export function New() {
         }
 
         await sendNewNote(title, description, tags, links)
-        navigate("/") // depois de criar a nota, ir para a home
+        navigate(-1) // depois de criar a nota, volta para a home
+    }
+
+    function handleBack() {
+        navigate(-1)   // volta 1 no histórico
     }
 
     return(
@@ -69,7 +73,7 @@ export function New() {
                 <Form>
                     <header>
                         <h1>Criar nota</h1>
-                        <Link to="/">voltar</Link>
+                        <ButtonText title="voltar" onClick={handleBack}/>
                     </header>
 
                     <Input 
