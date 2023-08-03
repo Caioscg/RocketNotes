@@ -1,7 +1,8 @@
 <h1 align="center">Rocket Notes</h1>
 
 <p align="center">
-A basic frontend development.
+Welcome to the Rocket Notes app, here you can save and check the usefull links. <br>
+Site Link: https://rocketn.netlify.app
 </p>
 
 <p align="center">
@@ -28,6 +29,7 @@ This project was developed with the following technologies:
 - HTML and CSS
 - JavaScript
 - ReactJs
+- SQLite
 - Vite
 - NodeJs
 - Figma
@@ -40,10 +42,22 @@ This project was developed with the following libraries:
 - styled components
 - react icons
 - react router dom
+- express
+- nodemon
+- express-async-errors
+- sqlite
+- knex
+- bcryptjs
+- jsonwebtoken
+- multer
+- cors
+- dotenv
+- pm2
+- jest
 
 ## 💻 Project
 
-- This is the Front-end for the Rocket Notes app.
+- With this app you can save notes, including links and informations, and separating every notes with tags.
 
 ## :memo: License
 
