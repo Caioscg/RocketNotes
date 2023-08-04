@@ -2,8 +2,9 @@
 
 <p align="center">
 Welcome to the Rocket Notes app, here you can save and check the useful links. <br>
-Site Link: https://rocketn.netlify.app
 </p>
+
+## Site Link: https://rocketn.netlify.app
 
 <p align="center">
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
